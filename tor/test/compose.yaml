@@ -1,0 +1,17 @@
+services:
+  nginx:
+    image: "nginx:latest"
+    hostname: secretsite
+    ports:
+      - "4000:80"
+
+  tor:
+    build:
+      context: ..
+      dockerfile: v1.Dockerfile
+    command: "-f /etc/tor/torrc"
+    depends_on:
+      - nginx
+    volumes:
+      - "./nginx.torrc:/etc/tor/torrc"
+      - "./hidden_service:/var/lib/tor/secretsite/hidden_service"
