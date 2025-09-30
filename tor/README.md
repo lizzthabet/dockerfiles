@@ -17,10 +17,16 @@ build the image on the host platform:
 docker build -t local/tor:dev --no-cache --progress=plain .
 ```
 
+and for multiplatforms (with `containerd` store and a supported builder):
+
+```bash
+docker build --platform linux/amd64,linux/arm64 -t local/tor:dev --no-cache --progress=plain .
+```
+
 ## testing the image
 
 ```bash
-docker run nginx:latest
+docker run -p 4000:80 nginx:latest
 docker run --rm -v ./test/torrc:/etc/tor/torrc -v ./test/hidden_service:/var/lib/tor/secretsite/hidden_service local/tor:dev -f /etc/tor/test.torrc
 ```
 
